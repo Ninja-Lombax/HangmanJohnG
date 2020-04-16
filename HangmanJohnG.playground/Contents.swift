@@ -12,7 +12,7 @@ var minNumber = 0
 //var playerGuessString:String
 var chooseWord = Int.random(in: minNumber ... (wordGuessArrayLength - 1))
 
-var wordToGuess = wordGuessArray[chooseWord]
+var wordToGuess:String = wordGuessArray[chooseWord]
 var playerGuess:[String] = []
 
 
@@ -24,9 +24,41 @@ func displayWordToGuess()
     print(playerGuessString)
 }
 
+func compareLetters(playersChosenLetter:String)
+{
+    var i = 0
+    var wordToGuessLetter = Array(wordToGuess)
+    //wordToGuessLetter = Array(wordToGuess)
+    while(i <= wordGuessArrayLength)
+    {
+        
+        
+        if(playersChosenLetter[0] == wordToGuessLetter.index(i)) //This is where I am stuck. I am trying to compare it by element because I need to replace underscores in another array
+        {
+            
+            
+        }
+        
+    }
+    
+}
+
+func chooseLetter()
+{
+    var i = 0
+    let randomLetter = Int.random(in: minNumber ... (letterArrayLength - 1))
+    let playersChosenLetter:String = letterArray[randomLetter]
+    
+    compareLetters(playersChosenLetter:playersChosenLetter)
+    
+}
+
+
+
 for _ in wordToGuess
 {
     playerGuess.append("_")
     
 }
  displayWordToGuess()
+
