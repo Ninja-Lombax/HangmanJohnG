@@ -9,20 +9,26 @@ var wordGuessArray = ["STEAK","CHICKEN","PIZZA","HAMBURGER","SPAGHETTI","APPLE",
 var letterArrayLength = letterArray.count
 var wordGuessArrayLength = wordGuessArray.count
 var minNumber = 0
+var loopRun = 0
+var incrementChance = 0
 //var playerGuessString:String
 var chooseWord = Int.random(in: minNumber ... (wordGuessArrayLength - 1))
-
-var wordToGuess:String = wordGuessArray[chooseWord]
+var wordToGuess = wordGuessArray[chooseWord]
 var wordToGuessLength = wordToGuess.count
+var numberofChances = 0
+let maximumChances = 7
 var playerGuess:[String] = []
+
 
 
 func displayWordToGuess()
 {
     //print(playerGuess)
+    print("\nThe word you are trying to guess is: ")
     let playerGuessString = playerGuess.joined()
     //var playerGuessString = String(playerGuess)
     print(playerGuessString)
+    sleep(1)
 }
 
 func compareLetters(playersChosenLetter:String)
@@ -30,8 +36,9 @@ func compareLetters(playersChosenLetter:String)
     var i = 0
     var wordToGuessLetter = Array(wordToGuess)
     //wordToGuessLetter = Array(wordToGuess)
-    var playerGuessS = Array(playerGuess)
+    //var playerGuessS = Array(playerGuess)
     var playersChosen = Array(playersChosenLetter)
+    incrementChance = 0
 
     while(i <= (wordToGuess.count - 1))
     {
@@ -42,28 +49,43 @@ func compareLetters(playersChosenLetter:String)
         {
             
             //playerGuessString.replacingOccurrences(of: "_", with: "A")
-            print("In the comparison")
+            //print("In the comparison")
             //playerGuessS[i] = wordToGuessLetter[i]
             //playerGuessS.replaceSubrange(Range<1>, with: "a")
-            playerGuessS.replaceSubrange(i...i, with: [playersChosenLetter])
-            print(playerGuessS)
+            playerGuess.replaceSubrange(i...i, with: [playersChosenLetter])
+            incrementChance = 1
+            //print(playerGuessS)
         }
         i = i + 1
         
     }
     
+    //playerGuess = Array(playerGuessS)
+    displayWordToGuess()
 }
 
 func chooseLetter()
 {
-    //var i = 0
+    print("\nPlease choose a letter:")
+    sleep(1)
     let randomLetter = Int.random(in: minNumber ... (letterArrayLength - 1))
     let playersChosenLetter = letterArray[randomLetter]
     
     compareLetters(playersChosenLetter:playersChosenLetter)
+    print("\nThe letter you have chosen is: \(playersChosenLetter)")
+    sleep(1)
     
 }
 
+func winOrLose()
+{
+    if incrementChance == 0
+    {
+        loopRun = loopRun + 1
+        print("\nSorry you didn't find a letter. Please try again. You have \(loopRun) out of \(maximumChances) possible chances.")
+        sleep(1)
+    }
+}
 
 
 for _ in wordToGuess
@@ -72,5 +94,15 @@ for _ in wordToGuess
     
 }
 
-displayWordToGuess()
-chooseLetter()
+
+while(loopRun <= 6)
+{
+    displayWordToGuess()
+    chooseLetter()
+    winOrLose()
+
+    sleep(1)
+}
+
+
+print("\nYou lost. Please try again.")
