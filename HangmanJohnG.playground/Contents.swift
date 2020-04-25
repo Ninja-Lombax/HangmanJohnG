@@ -10,7 +10,7 @@ var letterArrayLength = letterArray.count
 var wordGuessArrayLength = wordGuessArray.count
 var minNumber = 0
 var loopRun = 0
-var incrementChance = 0
+var incrementChance = 0, winState = 0
 //var playerGuessString:String
 var chooseWord = Int.random(in: minNumber ... (wordGuessArrayLength - 1))
 var wordToGuess = wordGuessArray[chooseWord]
@@ -79,12 +79,27 @@ func chooseLetter()
 
 func winOrLose()
 {
+    var i = 0
+    winState = 1
     if incrementChance == 0
     {
         loopRun = loopRun + 1
         print("\nSorry you didn't find a letter. Please try again. You have \(loopRun) out of \(maximumChances) possible chances.")
         sleep(1)
     }
+    
+    while(i <= (playerGuess.count - 1))
+    {
+        if playerGuess[i] == "_"
+        {
+            //incrementChance = 6
+            winState = 0
+            //break
+        }
+        i = i + 1
+        
+    }
+    
 }
 
 
@@ -95,7 +110,7 @@ for _ in wordToGuess
 }
 
 
-while(loopRun <= 6)
+while(loopRun <= 6 && winState == 0)
 {
     displayWordToGuess()
     chooseLetter()
@@ -104,5 +119,12 @@ while(loopRun <= 6)
     sleep(1)
 }
 
-
-print("\nYou lost. Please try again.")
+if(winState == 1)
+{
+    print("\nYou won the game. Congratulations!")
+    
+}
+else
+{
+    print("\nYou lost. Please try again.")
+}
