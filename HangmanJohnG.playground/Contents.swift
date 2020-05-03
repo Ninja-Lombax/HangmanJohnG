@@ -5,7 +5,7 @@ var str = "Hello, playground"
 var letterArray = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 var usedLetterArray:[String] = []
 //var letterArray:Character = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
-var wordGuessArray = ["STEAK","CHICKEN","PIZZA","HAMBURGER","SPAGHETTI","APPLE","BANANA","TACOS","SHRIMP","LASAGNA","PEAR","CAKE","PANCAKES","WINGS","FRIES","SALAD","FISH","COOKIES","CHILI","PEAS","RICE","CARROTS","CELERY","POPCORN","CORN","MOSTACCIOLI","SUSHI","RAMEN","SPINACH","LETTUCE","CHEESE","CHIPS","CHERRIES","EGGPLANT","PIES","BREADS","BISCUIT"]
+var wordGuessArray = ["STEAK","CHICKEN","PIZZA","HAMBURGER","SPAGHETTI","APPLE","BANANA","TACOS","SHRIMP","LASAGNA","PEAR","CAKE","PANCAKES","WINGS","FRIES","SALAD","FISH","COOKIES","CHILI","PEAS","RICE","CARROTS","CELERY","POPCORN","CORN","MOSTACCIOLI","SUSHI","RAMEN","SPINACH","LETTUCE","CHEESE","CHIPS","CHERRIES","EGGPLANT","PIES","BREADS","BISCUIT","SOUP"]
 
 var letterArrayLength = letterArray.count
 var wordGuessArrayLength = wordGuessArray.count
@@ -22,11 +22,44 @@ var playerGuess:[String] = []
 
 func addUsedLetter(playersChosenLetter:String)
 {
-    usedLetterArray.append(playersChosenLetter)
+    var i = 0
     
+    let usedLetters = Array(usedLetterArray)
+    //let playersLetter = Array(playersChosenLetter)
+    var findLetter = 0
+    
+    while i < (usedLetters.count)
+    {
+        //if
+        if usedLetters[i] == playersChosenLetter
+        {
+            
+            //usedLetterArray.append(playersChosenLetter)
+            findLetter = 1
+            break
+        }
+        
+
+        i = i + 1
+    }
+    
+    if findLetter == 0
+    {
+         print("\nThe letter you have chosen is: \(playersChosenLetter)")
+        usedLetterArray.append(playersChosenLetter)
+        
+    }
+    else
+    {
+        print("\nThe letter you chose was \(playersChosenLetter). That letter has already been chosen. Please choose another letter.")
+        loopRun = loopRun - 1
+        sleep(1)
+        
+    }
 }
 
 func displayWordToGuess()
+    
 {
  
     print("\nThe word you are trying to guess is: ")
@@ -49,7 +82,7 @@ func compareLetters(playersChosenLetter:String)
         
         
         
-        if wordToGuessLetter[i] == playersChosen[0] //wordToGuess.contains(playersChosenLetter)//wordToGuess[wordToGuess.index(wordToGuess.startIndex, offsetBy: i)] == playersChosenLetter]
+        if wordToGuessLetter[i] == playersChosen[0]
         {
             
 
@@ -63,7 +96,7 @@ func compareLetters(playersChosenLetter:String)
     
     //playerGuess = Array(playerGuessS)
     addUsedLetter(playersChosenLetter: playersChosenLetter)
-    displayWordToGuess()
+    //displayWordToGuess()
 }
 
 func chooseLetter()
@@ -74,7 +107,7 @@ func chooseLetter()
     let playersChosenLetter = letterArray[randomLetter]
     
     compareLetters(playersChosenLetter:playersChosenLetter)
-    print("\nThe letter you have chosen is: \(playersChosenLetter)")
+   
     sleep(1)
     
 }
@@ -104,6 +137,13 @@ func winOrLose()
     
 }
 
+func alreadyUsedLetters()
+{
+    
+    print("\nThe letters you have already used are:\n \(usedLetterArray)")
+    
+}
+
 
 for _ in wordToGuess
 {
@@ -117,7 +157,7 @@ while(loopRun <= 6 && winState == false)
     displayWordToGuess()
     chooseLetter()
     winOrLose()
-    print(usedLetterArray)
+    alreadyUsedLetters()
     sleep(1)
 }
 
