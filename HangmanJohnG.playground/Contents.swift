@@ -1,3 +1,6 @@
+// Hangman final project for IMT 107
+// Created by John Grasser
+
 import UIKit
 
 var str = "Hello, playground"
@@ -12,13 +15,16 @@ var wordGuessArrayLength = wordGuessArray.count
 var minNumber = 0
 var loopRun = 0
 var incrementChance = 0, winState = false
-
+var hint = 0
 var chooseWord = Int.random(in: minNumber ... (wordGuessArrayLength - 1))
 var wordToGuess = wordGuessArray[chooseWord]
 var wordToGuessLength = wordToGuess.count
-var numberofChances = 0
-let maximumChances = 7
+var numberofChances = 1
+let maximumChances = 8
 var playerGuess:[String] = []
+
+print("Welcome to my Hangman game. You have seven chances to guess the word and a one time use hint function. If you guess the word, you win. If you run out of chances you lose. Good luck!")
+sleep(1)
 
 func addUsedLetter(playersChosenLetter:String)
 {
@@ -30,7 +36,7 @@ func addUsedLetter(playersChosenLetter:String)
     
     while i < (usedLetters.count)
     {
-        //if
+        
         if usedLetters[i] == playersChosenLetter
         {
             
@@ -51,8 +57,9 @@ func addUsedLetter(playersChosenLetter:String)
     }
     else
     {
-        print("\nThe letter you chose was \(playersChosenLetter). That letter has already been chosen. Please choose another letter.")
-        loopRun = loopRun - 1
+        print("\nThe letter you chose was \(playersChosenLetter). That letter has already been chosen. Please choose another letter. (You have \(loopRun) out of \(maximumChances) possible chances.)")
+       
+        incrementChance = 1
         sleep(1)
         
     }
@@ -62,12 +69,15 @@ func displayWordToGuess()
     
 {
  
-    print("\nThe word you are trying to guess is: ")
+    print("\n\n\nThe word you are trying to guess is: ")
     let playerGuessString = playerGuess.joined()
 
     print(playerGuessString)
     sleep(1)
 }
+
+
+
 
 func compareLetters(playersChosenLetter:String)
 {
@@ -94,22 +104,74 @@ func compareLetters(playersChosenLetter:String)
         
     }
     
-    //playerGuess = Array(playerGuessS)
+    
     addUsedLetter(playersChosenLetter: playersChosenLetter)
-    //displayWordToGuess()
+    
+}
+
+func wordHint()
+{
+    var blankSpot = 0
+    //var playersChosenLetter:[String] = []
+    
+    let wordToGuessArray = Array(wordToGuess)
+    var playersChosenLetter = wordToGuessArray[0]
+    var randomLetter:Int
+    if hint == 0
+    {
+            hint = 1
+            
+            
+            print("You have activated the hint function.")
+
+        
+            while(blankSpot == 0)
+            {
+                randomLetter = Int.random(in: minNumber ... (wordToGuess.count - 1))
+                playersChosenLetter = wordToGuessArray[randomLetter]
+                //let playersChosen = String(playersChosenLetter)
+                if(playerGuess[randomLetter] == "_")
+                {
+
+                        compareLetters(playersChosenLetter:String(playersChosenLetter))
+                        blankSpot = 1
+                        break
+                        
+                }
+                
+            }
+            
+
+            
+        
+    }
+    else
+    {
+            print("You have already used the hint function. Please select another letter.")
+        
+    }
+
+    
 }
 
 func chooseLetter()
 {
     print("\nPlease choose a letter:")
     sleep(1)
-    let randomLetter = Int.random(in: minNumber ... (letterArrayLength - 1))
+    let randomLetter = Int.random(in: minNumber ... (letterArrayLength))
+    //var randomLetter = 26
+    if(randomLetter == letterArrayLength)
+    {
+        wordHint()
+        
+    }
+    else{
     let playersChosenLetter = letterArray[randomLetter]
     
     compareLetters(playersChosenLetter:playersChosenLetter)
    
     sleep(1)
-    
+    }
 }
 
 func winOrLose()
@@ -152,21 +214,22 @@ for _ in wordToGuess
 }
 
 
-while(loopRun <= 6 && winState == false)
+while(loopRun <= 7 && winState == false)
 {
     displayWordToGuess()
+    //printUsedLetters()
+    alreadyUsedLetters()
     chooseLetter()
     winOrLose()
-    alreadyUsedLetters()
     sleep(1)
 }
 
 if(winState == true)
 {
-    print("\nYou won the game. The word was \(wordToGuess). Congratulations!")
+    print("\n\nYou won the game. The word was \(wordToGuess). Congratulations!")
     
 }
 else
 {
-    print("\nYou lost. The word was \(wordToGuess). Please try again.")
+    print("\n\nYou lost. The word was \(wordToGuess). Please try again.")
 }
